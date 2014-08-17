@@ -12,23 +12,19 @@ app.get('/knows', function(req, res){
 	var params = { 'll' : req.query.lat+','+req.query.lng}
 	foursquare.venues.explore(params, function(err, data) {
 		if (!err) {
-			var venues = data["response"]["groups"][0]["items"]
+			var responseObjects = data["response"]["groups"][0]["items"]
+			var venues = []
 
-			var minDistance = 9999
-			var closestVenue = ''
-
-			for (var i = 0; i < venues.length; i++) {
-				var venue = venues[i].venue
-				if (venue.location.distance < minDistance) {
-					minDistance = venue.location.distance
-					closestVenue = venue.name
-				}
+			for (var i = 0; i < responseObjects.length; i++) {
+				var venue = responseObjects[i].venue
+				venues.push({ 'name' : venue.name, 'distance' : venue.location.distance })
 			}
 
-			var options = { query: closestVenue, format: 'html', summaryOnly: true }
+			var options = { query: 'Montreal', format: 'html', summaryOnly: true }
 			wikipedia.searchArticle(options, function(err, wikiDescription) {
 				if (!err) {
-					res.send({ 'name' : closestVenue, 'description' : wikiDescription })
+					venues[0].description = wikiDescription
+					res.send(venues)
 				}
 			})
 
