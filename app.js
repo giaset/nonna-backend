@@ -8,13 +8,18 @@ app.get('/', function(req, res){
 	foursquare.venues.explore(params, function(err, data) {
 		var venues = data["response"]["groups"][0]["items"]
 
-		var venueNames = []
+		var minDistance = 9999
+		var closestVenue = ''
 
 		for (var i = 0; i < venues.length; i++) {
-				venueNames.push(venues[i].venue.name)
+				var venue = venues[i].venue
+				if (venue.location.distance < minDistance) {
+					minDistance = venue.location.distance
+					closestVenue = venue.name
+				}
 			}
 
-		res.send(venueNames)
+		res.send(closestVenue)
 	})
 })
 
