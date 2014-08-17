@@ -6,12 +6,13 @@ var foursquare = require('node-foursquare-venues')('35UH1ZRV1LML4OMHUNV2CISGII0G
 app.get('/', function(req, res){
 	var params = { 'll' : req.query.lat+','+req.query.lng}
 	foursquare.venues.explore(params, function(err, data) {
-		var venues = data["response"]["groups"][0]["items"]
+		if (!err) {
+			var venues = data["response"]["groups"][0]["items"]
 
-		var minDistance = 9999
-		var closestVenue = ''
+			var minDistance = 9999
+			var closestVenue = ''
 
-		for (var i = 0; i < venues.length; i++) {
+			for (var i = 0; i < venues.length; i++) {
 				var venue = venues[i].venue
 				if (venue.location.distance < minDistance) {
 					minDistance = venue.location.distance
@@ -19,7 +20,10 @@ app.get('/', function(req, res){
 				}
 			}
 
-		res.send(closestVenue)
+			res.send(closestVenue)
+		} else {
+			res.send('Silly rabbit. You fucked up.')
+		}
 	})
 })
 
