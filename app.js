@@ -24,7 +24,7 @@ app.get('/knows', function(req, res){
 				}
 			}
 
-			res.send(closestVenue)
+			res.send({ 'name' : closestVenue })
 		} else {
 			res.send('Silly rabbit. You fucked up.')
 		}
