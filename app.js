@@ -20,13 +20,15 @@ app.get('/knows', function(req, res){
 				venues.push({ 'name' : venue.name, 'distance' : venue.location.distance })
 			}
 
-			var options = { query: 'Montreal', format: 'html', summaryOnly: true }
+			res.send(venues)
+
+			/*var options = { query: venues[0].name, format: 'html', summaryOnly: true }
 			wikipedia.searchArticle(options, function(err, wikiDescription) {
 				if (!err) {
 					venues[0].description = wikiDescription
 					res.send(venues)
 				}
-			})
+			})*/
 
 		} else {
 			res.send('Silly rabbit. You fucked up.')
