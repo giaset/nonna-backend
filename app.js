@@ -6,7 +6,15 @@ var foursquare = require('node-foursquare-venues')('35UH1ZRV1LML4OMHUNV2CISGII0G
 app.get('/', function(req, res){
 	var params = { 'll' : req.query.lat+','+req.query.lng}
 	foursquare.venues.explore(params, function(err, data) {
-		res.send(data)
+		var venues = data["response"]["groups"][0]["items"]
+
+		var venueNames = []
+
+		for (var i = 0; i < venues.length; i++) {
+				venueNames.push(venues[i].venue.name)
+			}
+
+		res.send(venueNames)
 	})
 })
 
