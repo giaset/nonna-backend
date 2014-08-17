@@ -1,0 +1,23 @@
+{
+  "name": "nonna-backend",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giaset/nonna-backend.git"
+  },
+  "author": "Gianni Settino",
+  "license": "BSD",
+  "gitHead": "19abb084862343b196e21745f02b601010a3f339",
+  "bugs": {
+    "url": "https://github.com/giaset/nonna-backend/issues"
+  },
+  "dependencies": {
+    "express": "~4.8.4",
+    "node-foursquare-venues": "~0.3.1"
+  }
+}
