@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 
 var foursquare = require('node-foursquare-venues')('35UH1ZRV1LML4OMHUNV2CISGII0GHFILV3Z1CHDBQB5WHIO1', '5NCVL2KJG5WDNS4KX2ZR5SVP3UDMFJNZL04LSHJLLDL5ZY0G')
+var wikipedia = require('wikipedia-js')
 
 app.get('/', function(req, res){
 	res.send('#nonnaknowseverything');
@@ -24,7 +25,13 @@ app.get('/knows', function(req, res){
 				}
 			}
 
-			res.send({ 'name' : closestVenue })
+			var options = { query: closestVenue, format: 'html', summaryOnly: true }
+			wikipedia.searchArticle(options, function(err, wikiDescription) {
+				if (!err) {
+					res.send({ 'name' : closestVenue, 'description' : wikiDescription })
+				}
+			})
+
 		} else {
 			res.send('Silly rabbit. You fucked up.')
 		}
